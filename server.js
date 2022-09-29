@@ -28,18 +28,18 @@ app.engine('evelyn', (filePath, options, callback) => { // define the view engin
 // Index 
 app.get('/', (req, res) => {
     res.render('template', { title: 'Index Page',
-    message: 'Hello there, stranger. Welcome to Express Homework Number 1',
-    content: `<button onclick="window.location.href='/greeting/'">Greetings</button> <img src="https://c.tenor.com/WuOwfnsLcfYAAAAC/star-wars-obi-wan-kenobi.gif" width=1500 height=650></img>` 
+    message: 'Hello there, stranger. Welcome to Express Homework Number 1. Click a button to play!',
+    content: `<button onclick="window.location.href='/greeting/'">Greetings</button> <button onclick="window.location.href='/tip/:num1/:num2/'">Tip Calculator</button> <img src="https://c.tenor.com/WuOwfnsLcfYAAAAC/star-wars-obi-wan-kenobi.gif" width=1500 height=650></img>` 
     })
 })
 
+//---GREETINGS 
 app.get('/greeting', (req, res) => {
     res.render('template', { title: 'Greetings',
     message: 'In order to meet one of the names below you must click on them!',
     content: `<li><a href="/greeting/name/0">Kenobi</a></li> <li><a href="/greeting/name/1">DJ Khaled</a></li> <a href="/">Return To Index</a>` 
     })
 })
-
 
 // Show ---- Read ---- Get
 app.get('/greeting/name/:i', (req, res) => {
@@ -51,7 +51,28 @@ app.get('/greeting/name/:i', (req, res) => {
     })
 })
 
+//---TIP CALCULATOR
+app.get('/tip/:num1/:num2', (req, res) => {
+    const ans = parseInt(req.params.num2) / parseInt(req.params.num1)
+    const billTotal = parseInt(req.params.num1) + parseInt(req.params.num2)
+    res.render('template', {
+        title: `Tip Calculator`,
+        message: `Calculate your tip!
+        <h3>Instructions: When hitting the route (/tip/:num1/:num2), the page should display how much your tip will be based on the total amount of the bill and the tip percentage. If the bill is $100 then your tip should be at least 20% depending on how good or bad the service was. First num is the bill and second num is % you want to leave.</h3>`,
+        content: `Original bill was $${req.params.num1}. Your tip is ${ans}%. The bill total is $${billTotal}
+        <div><a href="/">Return To Index</a></div>`
+    })
 
+    // res.status(200).json({msg: `The answer is $${ans}`})
+})
+
+
+//---MAGIC 8 BALL
+
+
+
+
+//Errors :(
 /*
 //trying to get the GIF of "Hello there Kenobi" to work!!! 
 app.get('/greeting/name/:0', (req, res) => {
