@@ -60,6 +60,7 @@ app.get('/tip/:num1/:num2', (req, res) => {
         message: `Calculate your tip!
         <h3>Instructions: When hitting the route (/tip/:num1/:num2), the page should display how much your tip will be based on the total amount of the bill and the tip percentage. If the bill is $100 then your tip should be at least 20% depending on how good or bad the service was. First num is the bill and second num is % you want to leave.</h3>`,
         content: `Original bill was $${req.params.num1}. Your tip is ${ans}%. The bill total is $${billTotal}
+        <div><img src="https://media.makeameme.org/created/wheres-my-tip-5b66f7.jpg"></img></div>
         <div><a href="/">Return To Index</a></div>`
     })
 
