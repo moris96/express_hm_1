@@ -26,10 +26,17 @@ app.engine('evelyn', (filePath, options, callback) => { // define the view engin
 
 
 // Index 
+app.get('/', (req, res) => {
+    res.render('template', { title: 'Index Page',
+    message: 'Hello there, stranger. Welcome to Express Homework Number 1',
+    content: `<button onclick="window.location.href='/greeting/'">Greetings</button> <img src="https://c.tenor.com/WuOwfnsLcfYAAAAC/star-wars-obi-wan-kenobi.gif" width=1500 height=650></img>` 
+    })
+})
+
 app.get('/greeting', (req, res) => {
-    res.render('template', { title: 'Greetings Index Page',
-    message: 'Hello there, stranger. In order to meet one of the names below you must click on them!',
-    content: `<li><a href="/greeting/name/0">Kenobi</a></li><li><a href="/greeting/name/1">DJ Khaled</a></li>` 
+    res.render('template', { title: 'Greetings',
+    message: 'In order to meet one of the names below you must click on them!',
+    content: `<li><a href="/greeting/name/0">Kenobi</a></li> <li><a href="/greeting/name/1">DJ Khaled</a></li> <a href="/">Return To Index</a>` 
     })
 })
 
@@ -40,7 +47,7 @@ app.get('/greeting/name/:i', (req, res) => {
     res.render('template', {
         title: greeting.name,
         message: `${greeting.message}, ${greeting.name}! His rank is: ${greeting.rank}`,
-        content: `<a href="/greeting/">Return To Index</a>`
+        content: `<a href="/greeting/">Return To Greetings</a>`
     })
 })
 
