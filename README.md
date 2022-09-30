@@ -2,4 +2,4 @@
 
 --- 
 
-### instructions: click on [localhost:3000](localhost:3000) to play
+### instructions: copy paste localhost:3000 on browser to play
