@@ -29,10 +29,11 @@ app.engine('evelyn', (filePath, options, callback) => { // define the view engin
 app.get('/', (req, res) => {
     res.render('template', { title: 'Index Page',
     message: 'Hello there, stranger. Welcome to Express Homework Number 1. Click a button to play!',
-    content: `<button onclick="window.location.href='/greeting/'">Greetings</button> <button onclick="window.location.href='/tip/:num1/:num2/'">Tip Calculator</button> <img src="https://c.tenor.com/WuOwfnsLcfYAAAAC/star-wars-obi-wan-kenobi.gif" width=1500 height=650></img>` 
+    content: `<button onclick="window.location.href='/greeting/'">Greetings</button> <button onclick="window.location.href='/tip/:num1/:num2/'">Tip Calculator</button><button onclick="window.location.href='/magic/'">Magic 8 Ball</button> <img src="https://c.tenor.com/WuOwfnsLcfYAAAAC/star-wars-obi-wan-kenobi.gif" width=1500 height=650></img>` 
     })
 })
 
+// Show ---- Read ---- Get
 //---GREETINGS 
 app.get('/greeting', (req, res) => {
     res.render('template', { title: 'Greetings',
@@ -41,7 +42,6 @@ app.get('/greeting', (req, res) => {
     })
 })
 
-// Show ---- Read ---- Get
 app.get('/greeting/name/:i', (req, res) => {
     const greeting = greetings[req.params.i]
     res.render('template', {
@@ -58,7 +58,7 @@ app.get('/tip/:num1/:num2', (req, res) => {
     res.render('template', {
         title: `Tip Calculator`,
         message: `Calculate your tip!
-        <h3>Instructions: When hitting the route (/tip/:num1/:num2), the page should display how much your tip will be based on the total amount of the bill and the tip percentage. If the bill is $100 then your tip should be at least 20% depending on how good or bad the service was. First num is the bill and second num is % you want to leave.</h3>`,
+        <h3>Instructions: When hitting the route (/tip/:num1/:num2), the page should display how much your tip will be based on the total amount of the bill and the tip percentage. For example, if the bill is $100 then your tip should be at least 20% depending on how good or bad the service was. First num is the bill and second num is % you want to leave.</h3>`,
         content: `Original bill was $${req.params.num1}. Your tip is ${ans}%. The bill total is $${billTotal}
         <div><img src="https://media.makeameme.org/created/wheres-my-tip-5b66f7.jpg"></img></div>
         <div><a href="/">Return To Index</a></div>`
@@ -69,13 +69,34 @@ app.get('/tip/:num1/:num2', (req, res) => {
 
 
 //---MAGIC 8 BALL
+const responses = ["It is certain", "It is decidedly so", "Without a doubt", "Yes definitely","You may rely on it", "As I see it yes", "Most likely", "Outlook good","Yes", "Signs point to yes", "Reply hazy try again", "Ask again later","Better not tell you now", "Cannot predict now", "Concentrate and ask again","Don't count on it", "My reply is no", "My sources say no","Outlook not so good", "Very doubtful"];
+let randomResponse = responses[Math.floor(Math.random() * responses.length)];
 
+app.get('/magic', (req, res) => {
+    res.render('template', { title: 'Magic 8 Ball',
+    message: 'Ever dreamt of becoming rich? Of winning the lottery? Tired of your boring life? Wanted to buy a private jet, a beach house in The Hamptons, NY , Ferraris and Lambos and Buggatis and Paganis? Are you ready to become a millionaire and live the good life? Now is your chance! Find out!',
+    content: `<a href="/magic/Will%20I%20Be%20A%20Millionaire">Find out!</a>
+    <div><a href="/">Return To Index</a></div>
+    <div><img src="https://www.meme-arsenal.com/memes/8df96a7b07e30c579d2be560baa52cd8.jpg" width=1550 height=650></img></div>`
+    })
+})
+
+app.get('/magic/Will%20I%20Be%20A%20Millionaire', (req, res) => {
+    res.render('template', { title: 'Magic 8 Ball',
+    message: 'Your Fate:',
+    content: `
+    <h1>${randomResponse}</h1>
+    <div><a href="/magic/Will%20I%20Be%20A%20Millionaire">Another Fate</a></div>
+    <div><a href="/magic">Return To Question If You're Not Ready</a></div>
+    ` 
+    })
+})
 
 
 
 //Errors :(
 /*
-//trying to get the GIF of "Hello there Kenobi" to work!!! 
+//trying to get the GIF of "Hello there Kenobi" to work!!! It would have looked cooler but oh well lol
 app.get('/greeting/name/:0', (req, res) => {
     const greeting = greetings[req.params.i]
     res.render('template', {
